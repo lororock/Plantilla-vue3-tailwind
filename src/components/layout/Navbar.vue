@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import Dashboard from "../../views/dashboard.vue";
+import Dashboard from "../../views/Dashboard.vue";
 
 const isOpen = ref(false);
 const isSidebarOpen = ref(true);
