@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted  } from "vue";
 import Dashboard from "../../views/Dashboard.vue";
 
 const isOpen = ref(false);
-const isSidebarOpen = ref(true);
+const isSidebarOpen = ref(false);
 const isModalOpen = ref(false);
 
 const dropdownId = "dropdown-example";
@@ -15,13 +15,14 @@ const toggleDropdown = () => {
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
   isModalOpen.value = !isModalOpen.value;
-  console.log(isModalOpen.value, isSidebarOpen.value);
 };
 const closeModalOutside = () => {
   isModalOpen.value = !isModalOpen.value;
   isSidebarOpen.value = !isSidebarOpen.value;
-  console.log(isModalOpen.value, isSidebarOpen.value);
 };
+onMounted(() => {
+  closeModalOutside();
+});
 </script>
 
 <template>
@@ -49,7 +50,7 @@ const closeModalOutside = () => {
     </svg>
   </button>
   <div
-    v-if="isSidebarOpen || isModalOpen"
+    v-if="!isSidebarOpen || isModalOpen"
     :class="{
       'fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50':
         !isSidebarOpen,
@@ -59,8 +60,8 @@ const closeModalOutside = () => {
     <aside
       @click="closeModalOutside"
       id="sidebar-multi-level-sidebar"
-      :class="{ '-translate-x-0': !isSidebarOpen }"
-      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      :class="{ '-translate-x-full': isModalOpen }"
+      class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-0 sm:translate-x-0"
       aria-label="Sidebar"
     >
       <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
